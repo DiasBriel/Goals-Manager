@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
+import Counter from "./components/Counter";
 import GoalInput from "./components/GoalInput";
 import GoalItem from "./components/GoalItem";
 import Data from "./dummyData";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function App() {
   const [coursedGoals, setCoursedGoals] = useState(Data);
@@ -39,20 +39,20 @@ export default function App() {
     setIsAddMode(false);
   };
 
+  const handleCheckedGoals = (updatedGoals) => {
+    let counter = 0;
+    updatedGoals.forEach((goal) => {
+      if (goal.done === true) {
+        counter++;
+      }
+    });
+    setCompletedGoals(counter);
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <Text style={styles.title}>Let's organize{"\n"}your goals for today</Text>
-      <View style={styles.goalsTotal}>
-        <View>
-          <Text style={{ color: "white", fontSize: 16 }}>Total of Goals</Text>
-          <Text style={styles.counter}>{coursedGoals.length}</Text>
-        </View>
-        <View style={styles.divider}></View>
-        <View>
-          <Text style={{ color: "white", fontSize: 16 }}>Total of Goals</Text>
-          <Text style={styles.counter}>32</Text>
-        </View>
-      </View>
+      <Counter coursedGoals={coursedGoals} completedGoals={completedGoals} />
       <View
         style={{
           flexDirection: "row",
@@ -63,7 +63,6 @@ export default function App() {
         }}
       >
         <Text style={{ fontWeight: "bold", fontSize: 16 }}>Your Goals</Text>
-
         <GoalInput
           visible={isAddMode}
           onAddGoal={addGoalHandler}
@@ -82,17 +81,22 @@ export default function App() {
               id={itemData.item.uid}
               onDelete={removeGoalHandler}
               title={itemData.item.value}
+              data={coursedGoals}
+              getNewData={handleCheckedGoals}
             />
           )}
         />
+      </SafeAreaView>
+      <View style={{ position: "relative" }}>
         <TouchableOpacity
           style={styles.addGoalButton}
           onPress={() => setIsAddMode(true)}
         >
-          <Text>New Goal</Text>
+          <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
+            New Goal
+          </Text>
         </TouchableOpacity>
-      </SafeAreaView>
-      <View style={{ position: "relative", left: "-50%" }}></View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -100,39 +104,12 @@ export default function App() {
 const styles = StyleSheet.create({
   screen: {
     paddingTop: 50,
-    paddingHorizontal: 30,
+    paddingHorizontal: 15,
   },
   header: {
     paddingVertical: 50,
     fontSize: 32,
     fontWeight: "bold",
-  },
-  goalsTotal: {
-    marginVertical: 15,
-    borderRadius: 30,
-    paddingVertical: 45,
-    paddingHorizontal: 20,
-    backgroundColor: "#2B3A67",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    shadowColor: "#444",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-    elevation: 12,
-  },
-  divider: {
-    height: "100%",
-    width: 1,
-    backgroundColor: "white",
-  },
-  counter: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: "white",
   },
   title: {
     fontWeight: "bold",
@@ -142,10 +119,23 @@ const styles = StyleSheet.create({
   },
   addGoalButton: {
     position: "absolute",
-    backgroundColor: "#f6f6f6",
-    padding: 10,
-    borderRadius: 5,
-    bottom: -30,
-    left: "50%",
+    backgroundColor: "#5D737E",
+    width: "70%",
+    paddingVertical: 20,
+    paddingHorizontal: 40,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+    bottom: -70,
+    left: "15%",
+    shadowColor: "#444",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
   },
 });
