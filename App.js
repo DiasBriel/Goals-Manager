@@ -69,9 +69,7 @@ export default function App() {
           onCancel={cancelGoalAddHandler}
         />
       </View>
-      <SafeAreaView
-        style={{ marginTop: 10, height: "45%", position: "relative" }}
-      >
+      <SafeAreaView style={{ marginTop: 10, height: "45%" }}>
         <FlatList
           style={styles.list}
           keyExtractor={(item, index) => item.uid} //uid was used to simulate an invalid key name

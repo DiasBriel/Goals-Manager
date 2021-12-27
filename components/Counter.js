@@ -9,7 +9,7 @@ const Counter = (props) => {
       </View>
       <View style={styles.divider}></View>
       <View>
-        <Text style={{ color: "white", fontSize: 16 }}>Completed Goals</Text>
+        <Text style={{ color: "white", fontSize: 16 }}>Accomplished Goals</Text>
         <Text style={styles.counter}>{props.completedGoals}</Text>
       </View>
     </View>
