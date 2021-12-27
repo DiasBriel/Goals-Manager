@@ -18,7 +18,9 @@ const GoalItem = (props) => {
     <View>
       <Modal visible={modalVisible} animationType="slide">
         <View style={styles.inputContainer}>
-          <Text style={styles.title}>Are you sure to delete the goal?</Text>
+          <Text style={styles.title}>
+            Are you sure you want to delete this goal?
+          </Text>
           <Text style={styles.goaltitle}>{props.title}</Text>
 
           <View style={styles.buttonsContainer}>
