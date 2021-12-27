@@ -78,6 +78,7 @@ export default function App() {
           data={coursedGoals}
           renderItem={(itemData) => (
             <GoalItem
+              checked={itemData.item.done}
               id={itemData.item.uid}
               onDelete={removeGoalHandler}
               title={itemData.item.value}
